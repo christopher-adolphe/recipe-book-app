@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-xs-12 col-md-4 col-md-offset-4">
+    <ng-container *ngIf="isLoading">
+      <app-loader></app-loader>
+    </ng-container>
+
+    <form [formGroup]="signInForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
+      <div class="form-group" [ngClass]="{
+        'has-error': email.invalid && (email.dirty || email.touched),
+        'has-success': email.valid && (email.dirty || email.touched)
+      }">
+        <label for="email" class="control-label">Email</label>
+        <input type="email" id="email" class="form-control" formControlName="email">
+        <ng-container *ngIf="email.errors && (email.dirty || email.touched)">
+          <span class="block-help text-danger" *ngIf="email.errors.required">Email is required</span>
+          <span class="block-help text-danger" *ngIf="email.errors.email">Email format is invalid</span>
+        </ng-container>
+      </div>
+
+      <div class="form-group" [ngClass]="{
+        'has-error': password.invalid && (password.dirty || password.touched),
+        'has-success': password.valid && (password.dirty || password.touched)
+      }">
+        <label for="password" class="control-label">Password</label>
+        <input type="password" id="password" class="form-control" formControlName="password">
+        <ng-container *ngIf="password.errors && (password.dirty || password.touched)">
+          <span class="block-help text-danger" *ngIf="password.errors.required">Password is required</span>
+          <span class="block-help text-danger" *ngIf="password.errors.minlength">Password is should at least be 6 characters long</span>
+        </ng-container>
+      </div>
+
+      <div class="form-group text-center">
+        <button type="submit" class="btn btn-primary" [disabled]="!signInForm.valid">{{ isSignInMode ? 'Sign In' : 'Sign Up'}}</button>
+        &nbsp;
+        <button type="button" class="btn btn-primary" (click)="onSwitchMode()">Switch to {{ isSignInMode ? 'Sign Up' : 'Sign In'}}</button>
+      </div>
+    </form>
+
+    <!-- <div class="alert alert-danger text-center" *ngIf="error">
+      <p>{{ error }}</p>
+    </div> -->
+  </div>
+</div>
+
+<!-- <app-alert [message]="error" (close)="onHandleAlert()" *ngIf="error"></app-alert> -->
+<ng-template appPlaceholder></ng-template>

@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-xs-5">
+    <form #shoppingListForm="ngForm" (ngSubmit)="onAdd()">
+      <div class="row">
+        <div class="col-xs-6 form-group" [ngClass]="{
+          'has-success': description.valid && (description.dirty || description.touched),
+          'has-error': description.invalid && (description.dirty || description.touched)
+        }">
+          <label for="description" class="control-label">Description</label>
+          <input type="text" name="description" id="description" class="form-control" name="description" ngModel required #description="ngModel">
+          <ng-container *ngIf="description.errors && (description.dirty || description.touched)">
+            <span class="help-block text-danger">Description is required</span>
+          </ng-container>
+        </div>
+
+        <div class="col-xs-6 form-group" [ngClass]="{
+          'has-success': amount.valid && (amount.dirty || amount.touched),
+          'has-error': amount.invalid && (amount.dirty || amount.touched)
+        }">
+          <label for="amount" class="control-label">Amount</label>
+          <input type="number" name="amount" id="amount" class="form-control" name="amount" ngModel required pattern="^[1-9]+[0-9]*$" #amount="ngModel">
+          <ng-container *ngIf="amount.errors && (amount.dirty || amount.touched)">
+            <span class="help-block text-danger" *ngIf="amount.errors.required">Amount is required</span>
+            <span class="help-block text-danger" *ngIf="amount.errors.pattern">Amount format is invalid</span>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <button type="submit" class="btn btn-success" [disabled]="!shoppingListForm.valid">{{ isEditMode ? 'Update' : 'Add '}}</button>
+          &nbsp;
+          <button type="button" class="btn btn-danger" [disabled]="!isEditMode" (click)="onDelete()">Delete</button>
+          &nbsp;
+          <button type="button" class="btn btn-primary" (click)="onClear()">Clear</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

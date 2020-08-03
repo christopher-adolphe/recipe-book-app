@@ -1,0 +1,22 @@
+.backdrop {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.alert-box {
+  width: 40vw;
+  position: fixed;
+  top: 30vh;
+  left: 30vw;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 4px;
+
+  &__actions {
+    text-align: right;
+  }
+}
