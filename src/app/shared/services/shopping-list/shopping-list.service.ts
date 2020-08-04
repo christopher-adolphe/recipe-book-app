@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { Ingredient } from '../../models/ingredient.interface';
+import * as fromShoppingList from '../../models/state.interface';
 
 import * as ShoppingListActions from '../../services/shopping-list/store/shopping-list.actions';
 
@@ -14,7 +15,7 @@ export class ShoppingListService {
   public ingredientsUpdated = new Subject<Ingredient[]>();
   public selectedIngredient: Subject<number> = new Subject<number>();
 
-  constructor(private store: Store<{shoppingList: {ingredients: Ingredient[]}}>) {
+  constructor(private store: Store<fromShoppingList.AppState>) {
     this.ingredients = [
       {
         amount: 1,
