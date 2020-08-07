@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AuthenticationComponent } from './authentication.component';
+import { LoaderComponent } from '../shared/components/loader/loader.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AuthenticationComponent', () => {
   let component: AuthenticationComponent;
@@ -8,9 +11,10 @@ describe('AuthenticationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AuthenticationComponent ]
+      declarations: [AuthenticationComponent, LoaderComponent],
+      imports: [RouterTestingModule, ReactiveFormsModule, HttpClientTestingModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +23,15 @@ describe('AuthenticationComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should initialize default states', () => {
+    component.ngOnInit();
+    expect(component.isSignInMode).toBeTruthy();
+    expect(component.isLoading).toBeTruthy();
+    expect(component.error).toBeNull();
+  });
+
+  it('should call onInitSignInForm method', () => {
+    component.ngOnInit();
+    expect(spyOn(component, 'onInitSignInForm')).toHaveBeenCalled();
   });
 });
