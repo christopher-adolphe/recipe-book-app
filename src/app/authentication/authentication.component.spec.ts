@@ -25,13 +25,16 @@ describe('AuthenticationComponent', () => {
 
   it('should initialize default states', () => {
     component.ngOnInit();
-    expect(component.isSignInMode).toBeTruthy();
-    expect(component.isLoading).toBeTruthy();
-    expect(component.error).toBeNull();
+    fixture.whenStable().then(() => {
+      expect(component.isSignInMode).toBeTruthy();
+      expect(component.isLoading).toBeFalsy();
+      expect(component.error).toBeNull();
+    });
   });
 
   it('should call onInitSignInForm method', () => {
+    spyOn(component, 'onInitSignInForm')
     component.ngOnInit();
-    expect(spyOn(component, 'onInitSignInForm')).toHaveBeenCalled();
+    expect(component.onInitSignInForm).toHaveBeenCalled();
   });
 });

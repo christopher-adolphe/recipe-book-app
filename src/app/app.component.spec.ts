@@ -31,14 +31,19 @@ describe('AppComponent', () => {
 
   it(`should have as title 'recipe-book'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('recipe-book');
+    fixture.detectChanges();
+    fixture.whenRenderingDone().then(() => {
+      const compiled = fixture.nativeElement;
+      expect(compiled.indexOf('recipe-app') !== -1).toBeTruthy();
+    });
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('recipe-book app is running!');
+    fixture.whenRenderingDone().then(() => {
+      const compiled = fixture.nativeElement;
+      expect(compiled.querySelector('.content span').textContent).toContain('recipe-book app is running!');
+    });
   });
 });

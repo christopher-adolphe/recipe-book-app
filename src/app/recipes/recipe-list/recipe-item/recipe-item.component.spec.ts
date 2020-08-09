@@ -16,14 +16,4 @@ describe('RecipeItemComponent', () => {
     })
       .compileComponents();
   }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(RecipeItemComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
 });
