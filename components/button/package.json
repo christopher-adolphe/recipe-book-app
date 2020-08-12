@@ -1,0 +1,20 @@
+{
+  "name": "@bit/scope.button",
+  "version": "1.0.0",
+  "homepage": "https://bit.dev/scope/button",
+  "main": "button.component.ts",
+  "componentId": {
+    "scope": "scope",
+    "name": "button",
+    "version": "1.0.0"
+  },
+  "dependencies": {
+    "@angular/core": "~10.0.6"
+  },
+  "devDependencies": {},
+  "peerDependencies": {},
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {}
+  }
+}
