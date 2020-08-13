@@ -1,5 +1,11 @@
 import * as ShoppingListActions from './shopping-list.actions';
-import { State } from 'src/app/shared/models/state.interface';
+import { Ingredient } from 'src/app/shared/models/ingredient.interface';
+
+export interface State {
+  ingredients: Ingredient[];
+  selectedIngredient: Ingredient;
+  selectedIngredientIndex: number;
+}
 
 const initialState: State = {
   ingredients: [

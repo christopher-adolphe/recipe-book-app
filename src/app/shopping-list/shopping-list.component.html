@@ -5,6 +5,7 @@
     <hr>
 
     <ul class="list-group">
+      <!-- Using the async (ingredients | async) pipe to subscribe to the ingredients Observable -->
       <li class="list-group-item" *ngFor="let ingredient of (ingredients | async).ingredients; let i = index" (click)="onIngredientSelected(i)">
         <a style="cursor: pointer;">{{ ingredient.amount }} {{ ingredient.description }}</a>
       </li>

@@ -3,9 +3,8 @@ import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { Ingredient } from '../shared/models/ingredient.interface';
-import * as fromShoppingList from '../shared/models/state.interface';
-import { ShoppingListService } from '../shared/services/shopping-list/shopping-list.service';
 import { LoggingService } from '../logging.service';
+import * as fromApp from '../store/app.reducer';
 import * as ShoppingListActions from '../shared/services/shopping-list/store/shopping-list.actions';
 
 @Component({
@@ -19,9 +18,8 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   ingredients: Observable<{ingredients: Ingredient[]}>;
 
   constructor(
-    private shoppingListService: ShoppingListService,
     private loggingService: LoggingService,
-    private store: Store<fromShoppingList.AppState>
+    private store: Store<fromApp.AppState>
   ) { }
 
   ngOnInit() {
@@ -29,6 +27,9 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     // this._obsSubscription = this.shoppingListService.ingredientsUpdated.subscribe(
     //   (updatedIngredients: Ingredient[]) => this.ingredients = updatedIngredients
     // );
+
+    // Using the select method of ngrx store service to select a slice of the state
+    // The select method returns the selected state as an Observable
     this.ingredients = this.store.select('shoppingList');
     this.loggingService.printLog('Hello from #ShoppingListComponent in #ngOnInit');
   }

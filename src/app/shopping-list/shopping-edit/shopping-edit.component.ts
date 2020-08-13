@@ -4,8 +4,7 @@ import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { Ingredient } from '../../shared/models/ingredient.interface';
-import * as fromShoppingList from '../../shared/models/state.interface';
-import { ShoppingListService } from '../../shared/services/shopping-list/shopping-list.service';
+import * as fromApp from '../../store/app.reducer';
 import * as ShoppingListActions from '../../shared/services/shopping-list/store/shopping-list.actions';
 
 @Component({
@@ -21,8 +20,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   isEditMode: boolean;
 
   constructor(
-    private shoppingListService: ShoppingListService,
-    private store: Store<fromShoppingList.AppState>
+    private store: Store<fromApp.AppState>
   ) { }
 
   ngOnInit() {
@@ -64,9 +62,15 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
     if (!this.isEditMode) {
       // this.shoppingListService.addIngredient(newIngredient);
+
+      // Using the dispatch method from the ngrx store service to dispatch the action we've defined
+      // Passing an object instantiated from the class of the action we want to dispatch
       this.store.dispatch(new ShoppingListActions.AddIngredient(newIngredient));
     } else {
       // this.shoppingListService.updateIngredient(this.selectedIngredientIndex, newIngredient);
+
+      // Using the dispatch method from the ngrx store service to dispatch the action we've defined
+      // Passing an object instantiated from the class of the action we want to dispatch
       this.store.dispatch(new ShoppingListActions.UpdateIngredient(newIngredient));
     }
 
@@ -75,6 +79,9 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
   onDelete() {
     // this.shoppingListService.deleteIngredient(this.selectedIngredientIndex);
+
+    // Using the dispatch method from the ngrx store service to dispatch the action we've defined
+    // Passing an object instantiated from the class of the action we want to dispatch
     this.store.dispatch(new ShoppingListActions.DeleteIngredient());
 
     this.onClear();
