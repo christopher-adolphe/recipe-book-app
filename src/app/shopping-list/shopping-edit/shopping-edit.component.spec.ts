@@ -1,4 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+
+import { Store, StoreModule } from '@ngrx/store';
 
 import { ShoppingEditComponent } from './shopping-edit.component';
 
@@ -8,9 +11,11 @@ describe('ShoppingEditComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ShoppingEditComponent ]
+      declarations: [ShoppingEditComponent],
+      imports: [FormsModule, StoreModule.forRoot({})],
+      providers: [Store]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

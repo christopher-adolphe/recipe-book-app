@@ -21,6 +21,6 @@ import { RecipeDefaultComponent } from './recipe-default/recipe-default.componen
   imports: [
     SharedModule,
     RecipesRoutingModule
-  ]
+  ],
 })
-export class RecipesModule {}
+export class RecipesModule { }

@@ -1,16 +1,25 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HeaderComponent } from './header/header.component';
 import { AppComponent } from './app.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { LoggingService } from './logging.service';
+
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientTestingModule
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        HeaderComponent
       ],
+      providers: [
+        LoggingService
+      ]
     }).compileComponents();
   }));
 
@@ -22,14 +31,19 @@ describe('AppComponent', () => {
 
   it(`should have as title 'recipe-book'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('recipe-book');
+    fixture.detectChanges();
+    fixture.whenRenderingDone().then(() => {
+      const compiled = fixture.nativeElement;
+      expect(compiled.indexOf('recipe-app') !== -1).toBeTruthy();
+    });
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('recipe-book app is running!');
+    fixture.whenRenderingDone().then(() => {
+      const compiled = fixture.nativeElement;
+      expect(compiled.querySelector('.content span').textContent).toContain('recipe-book app is running!');
+    });
   });
 });
