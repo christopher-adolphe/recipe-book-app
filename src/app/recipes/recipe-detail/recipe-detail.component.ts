@@ -5,7 +5,6 @@ import { Recipe } from 'src/app/shared/models/recipe.interface';
 import { Ingredient } from 'src/app/shared/models/ingredient.interface';
 
 import { RecipeService } from 'src/app/shared/services/recipe/recipe.service';
-import { ShoppingListService } from 'src/app/shared/services/shopping-list/shopping-list.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -18,7 +17,6 @@ export class RecipeDetailComponent implements OnInit {
 
   constructor(
     private recipeService: RecipeService,
-    private shoppingListService: ShoppingListService,
     private router: Router,
     private activatedRoute: ActivatedRoute) { }
 
@@ -33,7 +31,7 @@ export class RecipeDetailComponent implements OnInit {
 
   onAddToList(ingredients: Ingredient[]) {
     if (ingredients && ingredients.length > 0) {
-      this.shoppingListService.addMultipleIngredients(ingredients);
+      // this.shoppingListService.addMultipleIngredients(ingredients);
     }
   }
 
