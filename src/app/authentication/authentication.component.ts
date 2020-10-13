@@ -2,12 +2,15 @@ import { Component, OnInit, OnDestroy, ComponentFactoryResolver, ViewChild } fro
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { AuthenticationService } from '../shared/services/authentication/authentication.service';
 import { UserAuthentication } from '../shared/models/user-authentication.interface';
 import { AuthenticationResponse } from '../shared/models/authentication-response.interface';
 import { AlertComponent } from '../shared/components/alert/alert.component';
 import { PlaceholderDirective } from '../shared/directives/placeholder/placeholder.directive';
+import * as fromApp from '../store/app.reducer';
+import * as AuthenticationActions from '../shared/services/authentication/store/authentication.actions';
 
 @Component({
   selector: 'app-authentication',
@@ -29,13 +32,23 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router,
-    private componentFactoryResolver: ComponentFactoryResolver
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private store: Store<fromApp.AppState>
   ) { }
 
   ngOnInit() {
     this.isSignInMode = true;
-    this.isLoading = false;
-    this.error = null;
+    // this.isLoading = false;
+    // this.error = null;
+    this.store.select('authentication').subscribe(authState => {
+      this.isLoading = authState.isLoading;
+      this.error = authState.authError;
+
+      if (this.error) {
+        this.showAlert(this.error);
+      }
+    });
+    
     this.onInitSignInForm();
   }
 
@@ -69,24 +82,26 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     if (this.isSignInMode) {
-      authenticationObs = this.authenticationService.onSignIn(userAuth);
+      // authenticationObs = this.authenticationService.onSignIn(userAuth);
+      this.store.dispatch(new AuthenticationActions.LoginStart({email: userAuth.email, password: userAuth.password}));
     } else {
-      authenticationObs = this.authenticationService.onSignUp(userAuth)
+      // authenticationObs = this.authenticationService.onSignUp(userAuth)
+      this.store.dispatch(new AuthenticationActions.SignupStart({email: userAuth.email, password: userAuth.password}));
     }
 
-    authenticationObs.subscribe(
-      (response: AuthenticationResponse) => {
-        // console.log(response);
-        this.isLoading = false;
-        this.router.navigate(['/recipes']);
-      },
-      error => {
-        // console.log(error);
-        this.error = error;
-        this.showAlert(error);
-        this.isLoading = false;
-      }
-    );
+    // authenticationObs.subscribe(
+    //   (response: AuthenticationResponse) => {
+    //     // console.log(response);
+    //     this.isLoading = false;
+    //     this.router.navigate(['/recipes']);
+    //   },
+    //   error => {
+    //     // console.log(error);
+    //     this.error = error;
+    //     this.showAlert(error);
+    //     this.isLoading = false;
+    //   }
+    // );
 
     this.signInForm.reset();
   }

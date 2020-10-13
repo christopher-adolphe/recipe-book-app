@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
@@ -11,6 +12,7 @@ import { HeaderComponent } from './header/header.component';
 
 import { LoggingService } from './logging.service';
 import * as fromApp from './store/app.reducer'
+import { AuthenticationEffects } from './shared/services/authentication/store/authentication.effects';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import * as fromApp from './store/app.reducer'
     BrowserModule,
     HttpClientModule,
     StoreModule.forRoot(fromApp.appReducer),
+    EffectsModule.forRoot([AuthenticationEffects]),
     AppRoutingModule,
     CoreModule,
     SharedModule

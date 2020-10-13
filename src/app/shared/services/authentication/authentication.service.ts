@@ -55,7 +55,7 @@ export class AuthenticationService {
     const expiryDate = new Date(new Date().getTime() + (expiresIn * 1000));
     const user = new User(email, userId, tokenId, expiryDate);
     // this.user.next(user);
-    this.store.dispatch(new fromAuthenticationActions.Login({email, userId, tokenId, expiryDate}));
+    this.store.dispatch(new fromAuthenticationActions.AuthenticateSuccess({email, userId, tokenId, expiryDate}));
 
     this.autoSignOut(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(user));
@@ -94,7 +94,7 @@ export class AuthenticationService {
 
     if (authenticatedUser.tokenId) {
       // this.user.next(authenticatedUser);
-      this.store.dispatch(new fromAuthenticationActions.Login({email: authenticatedUser.email, userId: authenticatedUser.userId, tokenId: authenticatedUser.tokenId, expiryDate: new Date(user._tokenExpiryDate)}))
+      this.store.dispatch(new fromAuthenticationActions.AuthenticateSuccess({email: authenticatedUser.email, userId: authenticatedUser.userId, tokenId: authenticatedUser.tokenId, expiryDate: new Date(user._tokenExpiryDate)}))
       
       const duration: number = new Date(user._tokenExpiryDate).getTime() - new Date().getTime();
       this.autoSignOut(duration);
