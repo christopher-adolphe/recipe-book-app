@@ -26,6 +26,7 @@ export function authenticationReducer(state: State = initialState, action: Authe
       };
     
     case AuthenticationActions.LOGIN_START:
+    case AuthenticationActions.SIGNUP_START:
       return {
         ...state,
         authError: null,
@@ -45,6 +46,12 @@ export function authenticationReducer(state: State = initialState, action: Authe
         ...state,
         user: null
       };
+
+    case AuthenticationActions.CLEAR_ERROR:
+      return {
+        ...state,
+        authError: null
+      }
 
     default:
       return state;

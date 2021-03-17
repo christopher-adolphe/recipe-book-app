@@ -61,23 +61,21 @@ export class AuthenticationService {
     localStorage.setItem('userData', JSON.stringify(user));
   }
 
-  onSignUp(userAuth: UserAuthentication): Observable<AuthenticationResponse> {
-    // console.log('onSignUp: ', userAuth);
-    return this.httpClient.post<AuthenticationResponse>(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseAPIKey}`, userAuth)
-      .pipe(
-        catchError(this.errorHanlder),
-        tap(response => this.authenticationHandler(response.email, response.localId, response.idToken, +response.expiresIn))
-      );
-  }
+  // onSignUp(userAuth: UserAuthentication): Observable<AuthenticationResponse> {
+  //   return this.httpClient.post<AuthenticationResponse>(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseAPIKey}`, userAuth)
+  //     .pipe(
+  //       catchError(this.errorHanlder),
+  //       tap(response => this.authenticationHandler(response.email, response.localId, response.idToken, +response.expiresIn))
+  //     );
+  // }
 
-  onSignIn(userAuth: UserAuthentication): Observable<AuthenticationResponse> {
-    // console.log('onSignIn: ', userAuth);
-    return this.httpClient.post<AuthenticationResponse>(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseAPIKey}`, userAuth)
-      .pipe(
-        catchError(this.errorHanlder),
-        tap(response => this.authenticationHandler(response.email, response.localId, response.idToken, +response.expiresIn))
-      );
-  }
+  // onSignIn(userAuth: UserAuthentication): Observable<AuthenticationResponse> {
+  //   return this.httpClient.post<AuthenticationResponse>(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseAPIKey}`, userAuth)
+  //     .pipe(
+  //       catchError(this.errorHanlder),
+  //       tap(response => this.authenticationHandler(response.email, response.localId, response.idToken, +response.expiresIn))
+  //     );
+  // }
 
   autoSignIn() {
     const user: {
@@ -105,7 +103,7 @@ export class AuthenticationService {
     // this.user.next(null);
     this.store.dispatch(new fromAuthenticationActions.Logout());
 
-    this.router.navigate(['/auth']);
+    // this.router.navigate(['/auth']);
     localStorage.removeItem('userData');
 
     if (this._tokenTimer) {

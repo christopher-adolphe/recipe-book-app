@@ -23,11 +23,11 @@ export class RecipeEditComponent implements OnInit, DeactivateComponent {
   constructor(
     private recipeService: RecipeService,
     private router: Router,
-    private activateRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.activateRoute.params.subscribe(
+    this.activatedRoute.params.subscribe(
       (params: Params) => {
         const recipeId = +params['index'];
         this.isEditMode = params['index'] != null;
@@ -107,12 +107,12 @@ export class RecipeEditComponent implements OnInit, DeactivateComponent {
       this.recipeService.addRecipe(recipe);
     }
 
-    this.router.navigate(['/recipes'], {relativeTo: this.activateRoute});
+    this.router.navigate(['/recipes'], {relativeTo: this.activatedRoute});
   }
 
   onCancel() {
     this.recipeForm.reset();
-    this.router.navigate(['/recipes'], {relativeTo: this.activateRoute});
+    this.router.navigate(['/recipes'], {relativeTo: this.activatedRoute});
   }
 
   deactivateComponent(): boolean {

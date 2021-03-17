@@ -20,6 +20,7 @@ import * as AuthenticationActions from '../shared/services/authentication/store/
 export class AuthenticationComponent implements OnInit, OnDestroy {
   private _ObsSubscription: Subscription;
   private _closeSubscription: Subscription;
+  private _storeSubscription: Subscription;
   signInForm: FormGroup;
   email: FormControl;
   password: FormControl;
@@ -40,7 +41,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     this.isSignInMode = true;
     // this.isLoading = false;
     // this.error = null;
-    this.store.select('authentication').subscribe(authState => {
+    this._storeSubscription = this.store.select('authentication').subscribe(authState => {
       this.isLoading = authState.isLoading;
       this.error = authState.authError;
 
@@ -79,7 +80,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     };
     let authenticationObs: Observable<AuthenticationResponse>;
 
-    this.isLoading = true;
+    // this.isLoading = true;
 
     if (this.isSignInMode) {
       // authenticationObs = this.authenticationService.onSignIn(userAuth);
@@ -107,13 +108,18 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   }
 
   onHandleAlert() {
-    this.error = null;
+    // this.error = null;
+    this.store.dispatch(new AuthenticationActions.ClearError());
   }
 
   ngOnDestroy() {
     // this._ObsSubscription.unsubscribe();
     if (this._closeSubscription) {
       this._closeSubscription.unsubscribe();
+    }
+
+    if (this._storeSubscription) {
+      this._storeSubscription.unsubscribe();
     }
   }
 
