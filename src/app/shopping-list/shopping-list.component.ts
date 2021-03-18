@@ -31,6 +31,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     // Using the select method of ngrx store service to select a slice of the state
     // The select method returns the selected state as an Observable
     this.ingredients = this.store.select('shoppingList');
+    console.log(this.ingredients);
     this.loggingService.printLog('Hello from #ShoppingListComponent in #ngOnInit');
   }
 
