@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
@@ -17,7 +17,7 @@ const authenticationHandler = (response) => {
 
   localStorage.setItem('userData', JSON.stringify(user));
 
-  return new AuthenticationActions.AuthenticateSuccess({email: response.email, userId: response.localId, tokenId: response.idToken, expiryDate});
+  return new AuthenticationActions.AuthenticateSuccess({email: response.email, userId: response.localId, tokenId: response.idToken, expiryDate, redirect: true});
 };
 
 const errorHandler = (errorResponse) => {
@@ -106,7 +106,8 @@ export class AuthenticationEffects {
             email: authenticatedUser.email,
             userId: authenticatedUser.userId,
             tokenId: authenticatedUser.tokenId,
-            expiryDate: new Date(user._tokenExpiryDate)
+            expiryDate: new Date(user._tokenExpiryDate),
+            redirect: false
           }
         );
       }
@@ -129,8 +130,10 @@ export class AuthenticationEffects {
   @Effect({dispatch: false})
   authRedirect = this.actions$.pipe(
     ofType(AuthenticationActions.AUTHENTICATE_SUCCESS),
-    tap(() => {
-      this.router.navigate(['/']);
+    tap((authenticateSuccess: AuthenticationActions.AuthenticateSuccess) => {
+      if (authenticateSuccess.payload.redirect) {
+        this.router.navigate(['/']);
+      }
     })
   );
   

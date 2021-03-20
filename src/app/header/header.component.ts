@@ -3,11 +3,10 @@ import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import { DataStorageService } from '../shared/services/data-storage/data-storage.service';
-import { AuthenticationService } from '../shared/services/authentication/authentication.service';
 import { User } from '../shared/models/user.model';
 import * as fromApp from '../store/app.reducer';
 import * as AuthenticationActions from '../shared/services/authentication/store/authentication.actions';
+import * as RecipeActions from '../shared/services/recipe/store/recipe.actions';
 
 @Component({
   selector: 'app-header',
@@ -19,8 +18,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean;
 
   constructor(
-    private dataStorageService: DataStorageService,
-    private authenticationService: AuthenticationService,
     private store: Store<fromApp.AppState>
   ) {}
 
@@ -38,11 +35,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onSaveData() {
-    this.dataStorageService.saveRecipes();
+    // this.dataStorageService.saveRecipes();
+    this.store.dispatch(new RecipeActions.SaveRecipes());
   }
 
   onFetchData() {
-    this.dataStorageService.fetchRecipes().subscribe();
+    // this.dataStorageService.fetchRecipes().subscribe();
+    this.store.dispatch(new RecipeActions.FetchRecipes());
   }
 
   onSignOut() {

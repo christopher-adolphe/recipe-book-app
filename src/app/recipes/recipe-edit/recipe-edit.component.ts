@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import * as fromApp from '../../store/app.reducer';
+import * as RecipeActions from '../../shared/services/recipe/store/recipe.actions';
 
 import { Recipe } from 'src/app/shared/models/recipe.interface';
-import { RecipeService } from 'src/app/shared/services/recipe/recipe.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { Ingredient } from 'src/app/shared/models/ingredient.interface';
@@ -12,8 +16,11 @@ import { DeactivateComponent } from 'src/app/shared/models/deactivate-component.
   templateUrl: './recipe-edit.component.html',
   styleUrls: ['./recipe-edit.component.scss']
 })
-export class RecipeEditComponent implements OnInit, DeactivateComponent {
+export class RecipeEditComponent implements OnInit, OnDestroy, DeactivateComponent {
+  private _storeSubscription: Subscription;
+
   recipe: Recipe;
+  recipeIndex: number;
   isEditMode: boolean;
   recipeForm: FormGroup;
   name: FormControl;
@@ -21,25 +28,53 @@ export class RecipeEditComponent implements OnInit, DeactivateComponent {
   imgUrl: FormControl;
 
   constructor(
-    private recipeService: RecipeService,
+    private store: Store<fromApp.AppState>,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(
-      (params: Params) => {
-        const recipeId = +params['index'];
-        this.isEditMode = params['index'] != null;
-        this.recipe = this.recipeService.getRecipe(recipeId);
+    this.activatedRoute.params
+      .pipe(
+        map((params: Params) => {
+          this.isEditMode = params['index'] != null;
+
+          return +params['index'];
+        }),
+        switchMap(recipeIndex => {
+          this.recipeIndex = recipeIndex;
+
+          return this.store.select('recipes');
+        }),
+        map(recipeState => {
+          return recipeState.recipes.find((_, index) => {
+            return index === this.recipeIndex;
+          })
+        })
+      )
+      .subscribe((recipe: Recipe) => {
+        this.recipe = recipe
 
         if (this.isEditMode) {
           this.onInitFilledRecipeForm(this.recipe);
         } else {
           this.onInitRecipeForm();
         }
-      }
-    );
+      });
+
+    // this.activatedRoute.params.subscribe(
+    //   (params: Params) => {
+    //     const recipeId = +params['index'];
+    //     this.isEditMode = params['index'] != null;
+    //     this.recipe = this.recipeService.getRecipe(recipeId);
+
+    //     if (this.isEditMode) {
+    //       this.onInitFilledRecipeForm(this.recipe);
+    //     } else {
+    //       this.onInitRecipeForm();
+    //     }
+    //   }
+    // );
   }
 
   onInitRecipeForm() {
@@ -102,9 +137,11 @@ export class RecipeEditComponent implements OnInit, DeactivateComponent {
     }
     
     if (isEditMode) {
-      this.recipeService.editRecipe(recipe);
+      // this.recipeService.editRecipe(recipe);
+      this.store.dispatch(new RecipeActions.EditRecipe({ index: this.recipeIndex, recipe}));
     } else {
-      this.recipeService.addRecipe(recipe);
+      // this.recipeService.addRecipe(recipe);
+      this.store.dispatch(new RecipeActions.AddRecipe(recipe));
     }
 
     this.router.navigate(['/recipes'], {relativeTo: this.activatedRoute});
@@ -123,4 +160,7 @@ export class RecipeEditComponent implements OnInit, DeactivateComponent {
     }
   }
 
+  ngOnDestroy() {
+    
+  }
 }

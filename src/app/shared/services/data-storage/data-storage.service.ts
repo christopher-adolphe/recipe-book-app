@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, tap, take, exhaustMap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import * as fromApp from '../../../store/app.reducer';
+import * as RecipeActions from '../recipe/store/recipe.actions';
 
 import { RecipeService } from '../recipe/recipe.service';
 import { Recipe } from '../../models/recipe.interface';
-import { Observable } from 'rxjs';
-import { AuthenticationService } from '../authentication/authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,7 @@ export class DataStorageService {
   constructor(
     private httpClient: HttpClient,
     private recipeService: RecipeService,
-    private authenticationService: AuthenticationService
+    private store: Store<fromApp.AppState>
   ) {}
 
   saveRecipes() {
@@ -43,7 +45,10 @@ export class DataStorageService {
           })
         }),
         // Using tap operator to use the value of the response
-        tap(recipes => this.recipeService.setRecipes(recipes))
+        tap(recipes => {
+          // this.recipeService.setRecipes(recipes)
+          this.store.dispatch(new RecipeActions.SetRecipes(recipes));
+        })
       );
   }
 

@@ -1,0 +1,64 @@
+{
+  "recipes": [
+    {
+      "name": "Spaghetti Carbonara",
+      "description": "Discover how to make superb spaghetti carbonara. This cheesy pasta dish is an Italian favourite and with the right technique, you can make it perfect every time.",
+      "imgUrl": "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-1001491_11-2e0fa5c.jpg",
+      "ingredients": [
+        {"amount": 2, "description": "spaghetti"},
+        {"amount": 3, "description": "slices of smoked marlin"},
+        {"amount": 3, "description": "mozzarella"}
+      ]
+    },
+    {
+      "name": "Creamy salmon, leek & potato traybake",
+      "description": "Nestle leeks, potato and capers around salmon fillets to make this easy traybake for two. It\"s great as an midweek meal, or for a more romantic occasion.",
+      "imgUrl": "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/creamy-salmon-leek-potato-traybake-367b3ff.jpg",
+      "ingredients": [
+        {"amount": 4, "description": "potatoes"},
+        {"amount": 2, "description": "salmon filet"}
+      ]
+    },
+    {
+      "name": "Lamb with warm potato & olive salad",
+      "description": "This restaurant-standard dish is simple to make but worthy of any dinner party. Cooking the lamb this way stops it drying out and gives it a subtle flavour.",
+      "imgUrl": "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/lamb-with-warm-potato-salad-970c0f0.jpg",
+      "ingredients": [
+        {"amount": 4, "description": "potatoes"},
+        {"amount": 2, "description": "lbs of lamb meat"},
+        {"amount": 1, "description": "salade"}
+      ]
+    },
+    {
+      "name": "Crab & asparagus pappardelle",
+      "description": "Crab is so good to serve in the spring – combined with fresh egg pappardelle and asparagus, it makes a stunning seasonal dish. Pair it with a rocket salad.",
+      "imgUrl": "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/recipe-image-legacy-id-1001491_11-2e0fa5c.jpg",
+      "ingredients": [
+        {"amount": 2, "description": "Crabs"},
+        {"amount": 1, "description": "lbs of asparagus"},
+        {"amount": 3, "description": "eggs"}
+      ]
+    },
+    {
+      "name": "Meatball & garlic bread traybake",
+      "description": "Make this comforting meatball and garlic bread traybake for a dinner the whole family will enjoy. You could buy a pack of meatballs if you’re short on time.",
+      "imgUrl": "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/meatballsgarlic-bread-9245ad6.jpg",
+      "ingredients": [
+        {"amount": 350, "description": "g Turkey thigh mince"},
+        {"amount": 1, "description": "large onion"},
+        {"amount": 3, "description": "garlic cloves"}
+      ]
+    },
+    {
+      "name": "BBQ rainbow beef salad",
+      "description": "The steak in this light salad is cooked on the barbecue, giving it a true taste of summer. It works brilliantly with our Asian-inspired dressing.",
+      "imgUrl": "https://images.immediate.co.uk/production/volatile/sites/30/2020/08/bbq-rainbow-beef-salad-03d3bcf.jpg",
+      "ingredients": [
+        {"amount": 500, "description": "g sirloin steaks"},
+        {"amount": 1, "description": "garlic clove"},
+        {"amount": 3, "description": "carrots"},
+        {"amount": 1, "description": "large ripe avocado"}
+      ]
+    }
+  ]
+}
