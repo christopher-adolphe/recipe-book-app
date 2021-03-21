@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -10,7 +11,28 @@ import { Recipe } from '../../shared/models/recipe.interface'
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
-  styleUrls: ['./recipe-list.component.scss']
+  styleUrls: ['./recipe-list.component.scss'],
+  animations: [
+    trigger('recipeItem', [
+      state('slideInLeft', style({
+        opacity: 1,
+        transform: 'translateX(0)'
+      })),
+      transition(':enter', [
+        style({
+          opacity: 0,
+          transform: 'translateX(-50%)'
+        }),
+        animate(300)
+      ]),
+      transition(':leave', [
+        animate(300, style({
+          transform: 'translateX(-50%)',
+          opacity: 0
+        }))
+      ])
+    ])
+  ]
 })
 export class RecipeListComponent implements OnInit, OnDestroy {
   private _obsSubscription: Subscription

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -12,7 +13,28 @@ import { Ingredient } from 'src/app/shared/models/ingredient.interface';
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
-  styleUrls: ['./recipe-detail.component.scss']
+  styleUrls: ['./recipe-detail.component.scss'],
+  animations: [
+    trigger('recipeDetail', [
+      state('slideInRight', style({
+        opacity: 1,
+        transform: 'translateX(0)'
+      })),
+      transition(':enter', [
+        style({
+          opacity: 0,
+          transform: 'translateX(50%)'
+        }),
+        animate(300)
+      ]),
+      transition(':leave', [
+        animate(300, style({
+          transform: 'translateX(50%)',
+          opacity: 0
+        }))
+      ])
+    ])
+  ]
 })
 export class RecipeDetailComponent implements OnInit {
   recipe: Recipe;

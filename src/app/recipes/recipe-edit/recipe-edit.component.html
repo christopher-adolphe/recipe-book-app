@@ -1,86 +1,88 @@
-<h2>{{ isEditMode ? 'Edit Recipe' : 'Add New Recipe' }}</h2>
+<div class="container-fluid" @recipeForm>
+  <h2>{{ isEditMode ? 'Edit Recipe' : 'Add New Recipe' }}</h2>
 
-<form [formGroup]="recipeForm" novalidate>
-  <div class="row">
-    <div class="col-xs-12 form-group" [ngClass]="{
-      'has-success': name.valid && (name.dirty || name.touched),
-      'has-error': name.invalid && (name.dirty || name.touched)
-    }">
-      <label class="control-label" for="name">Name</label>
-      <input type="text" class="form-control" name="name" id="name" formControlName="name">
-      <span id="helpBlockName" class="help-block" *ngIf="name.errors && (name.dirty || name.touched)">Name is compulsory</span>
-    </div>
+  <form [formGroup]="recipeForm" novalidate>
+    <div class="row">
+      <div class="col-xs-12 form-group" [ngClass]="{
+        'has-success': name.valid && (name.dirty || name.touched),
+        'has-error': name.invalid && (name.dirty || name.touched)
+      }">
+        <label class="control-label" for="name">Name</label>
+        <input type="text" class="form-control" name="name" id="name" formControlName="name">
+        <span id="helpBlockName" class="help-block" *ngIf="name.errors && (name.dirty || name.touched)">Name is compulsory</span>
+      </div>
 
-    <div class="col-xs-12 form-group" [ngClass]="{
-      'has-success': description.valid && (description.dirty || description.touched),
-      'has-error': description.invalid && (description.dirty || description.touched)
-    }">
-      <label class="control-label" for="description">Description</label>
-      <textarea name="description" class="form-control" id="description" rows="3" formControlName="description"></textarea>
-      <span id="helpBlockDescription" class="help-block" *ngIf="description.errors && (description.dirty || description.touched)">Description is compulsory</span>
-    </div>
+      <div class="col-xs-12 form-group" [ngClass]="{
+        'has-success': description.valid && (description.dirty || description.touched),
+        'has-error': description.invalid && (description.dirty || description.touched)
+      }">
+        <label class="control-label" for="description">Description</label>
+        <textarea name="description" class="form-control" id="description" rows="3" formControlName="description"></textarea>
+        <span id="helpBlockDescription" class="help-block" *ngIf="description.errors && (description.dirty || description.touched)">Description is compulsory</span>
+      </div>
 
-    <div class="col-xs-12 form-group" [ngClass]="{
-      'has-success': imgUrl.valid && (imgUrl.dirty || imgUrl.touched),
-      'has-error': imgUrl.invalid && (imgUrl.dirty || imgUrl.touched)
-    }">
-      <label class="control-label" for="imgUrl">Image url</label>
-      <input type="text" class="form-control" name="imgUrl" id="imgUrl" formControlName="imgUrl">
-      <!-- <span id="helpBlockImgUrl" class="help-block" *ngIf="imgUrl.errors && (description.dirty || description.touched)">Image url is compulsory</span> -->
-      <ng-container *ngIf="imgUrl.errors && (imgUrl.dirty || imgUrl.touched)">
-        <span id="helpBlockImgUrl1" class="help-block" *ngIf="imgUrl.errors.required">Image url is compulsory</span>
-        <span id="helpBlockImgUrl2" class="help-block" *ngIf="imgUrl.errors.pattern">Image url format is invalid</span>
-      </ng-container>
-    </div>
+      <div class="col-xs-12 form-group" [ngClass]="{
+        'has-success': imgUrl.valid && (imgUrl.dirty || imgUrl.touched),
+        'has-error': imgUrl.invalid && (imgUrl.dirty || imgUrl.touched)
+      }">
+        <label class="control-label" for="imgUrl">Image url</label>
+        <input type="text" class="form-control" name="imgUrl" id="imgUrl" formControlName="imgUrl">
+        <!-- <span id="helpBlockImgUrl" class="help-block" *ngIf="imgUrl.errors && (description.dirty || description.touched)">Image url is compulsory</span> -->
+        <ng-container *ngIf="imgUrl.errors && (imgUrl.dirty || imgUrl.touched)">
+          <span id="helpBlockImgUrl1" class="help-block" *ngIf="imgUrl.errors.required">Image url is compulsory</span>
+          <span id="helpBlockImgUrl2" class="help-block" *ngIf="imgUrl.errors.pattern">Image url format is invalid</span>
+        </ng-container>
+      </div>
 
-    <div formArrayName="ingredients">
-      <ng-container *ngFor="let ingredient of ingredientsControls; let i = index">
-        <div [formGroupName]="i"> 
-          <div class="col-xs-10">
-            <div class="form-group" [ngClass]="{
-              'has-success': onGetFormControl(i, 'ingredientAmount').valid && (onGetFormControl(i, 'ingredientAmount').dirty || onGetFormControl(i, 'ingredientAmount').touched),
-              'has-error': onGetFormControl(i, 'ingredientAmount').invalid && (onGetFormControl(i, 'ingredientAmount').dirty || onGetFormControl(i, 'ingredientAmount').touched)
-            }">
-              <label class="control-label" [for]="'ingredientAmount-' + i">Amount</label>
-              <input type="text" class="form-control" [name]="'ingredientAmount-' + i" [id]="'ingredientAmount-' + i" formControlName="ingredientAmount">
-              <ng-container *ngIf="onGetFormControl(i, 'ingredientAmount').errors && (onGetFormControl(i, 'ingredientAmount').dirty || onGetFormControl(i, 'ingredientAmount').touched)">
-                <span id="helpBlockAmount1" class="help-block" *ngIf="onGetFormControl(i, 'ingredientAmount').errors.required">Amount url is compulsory</span>
-                <span id="helpBlockAmount2" class="help-block" *ngIf="onGetFormControl(i, 'ingredientAmount').errors.pattern">Amount should be a number</span>
-              </ng-container>
+      <div formArrayName="ingredients">
+        <ng-container *ngFor="let ingredient of ingredientsControls; let i = index">
+          <div [formGroupName]="i" @ingredientItem> 
+            <div class="col-xs-10">
+              <div class="form-group" [ngClass]="{
+                'has-success': onGetFormControl(i, 'ingredientAmount').valid && (onGetFormControl(i, 'ingredientAmount').dirty || onGetFormControl(i, 'ingredientAmount').touched),
+                'has-error': onGetFormControl(i, 'ingredientAmount').invalid && (onGetFormControl(i, 'ingredientAmount').dirty || onGetFormControl(i, 'ingredientAmount').touched)
+              }">
+                <label class="control-label" [for]="'ingredientAmount-' + i">Amount</label>
+                <input type="text" class="form-control" [name]="'ingredientAmount-' + i" [id]="'ingredientAmount-' + i" formControlName="ingredientAmount">
+                <ng-container *ngIf="onGetFormControl(i, 'ingredientAmount').errors && (onGetFormControl(i, 'ingredientAmount').dirty || onGetFormControl(i, 'ingredientAmount').touched)">
+                  <span id="helpBlockAmount1" class="help-block" *ngIf="onGetFormControl(i, 'ingredientAmount').errors.required">Amount url is compulsory</span>
+                  <span id="helpBlockAmount2" class="help-block" *ngIf="onGetFormControl(i, 'ingredientAmount').errors.pattern">Amount should be a number</span>
+                </ng-container>
+              </div>
+          
+              <div class="form-group" [ngClass]="{
+                'has-success': onGetFormControl(i, 'ingredientDescription').valid && (onGetFormControl(i, 'ingredientDescription').dirty || onGetFormControl(i, 'ingredientAmount').touched),
+                'has-error': onGetFormControl(i, 'ingredientDescription').invalid && (onGetFormControl(i, 'ingredientDescription').dirty || onGetFormControl(i, 'ingredientAmount').touched)
+              }">
+                <label class="control-label" [for]="'ingredientDescription-' + i">Ingredient description</label>
+                <input type="text" class="form-control" [name]="'ingredientDescription-' + i" [id]="'ingredientDescription-' + i" formControlName="ingredientDescription">
+                <span id="helpBlockIngredientDescription" class="help-block" *ngIf="onGetFormControl(i, 'ingredientDescription').errors && (onGetFormControl(i, 'ingredientDescription').dirty || onGetFormControl(i, 'ingredientDescription').touched)">Ingredient description is compulsory</span>
+              </div>
             </div>
-        
-            <div class="form-group" [ngClass]="{
-              'has-success': onGetFormControl(i, 'ingredientDescription').valid && (onGetFormControl(i, 'ingredientDescription').dirty || onGetFormControl(i, 'ingredientAmount').touched),
-              'has-error': onGetFormControl(i, 'ingredientDescription').invalid && (onGetFormControl(i, 'ingredientDescription').dirty || onGetFormControl(i, 'ingredientAmount').touched)
-            }">
-              <label class="control-label" [for]="'ingredientDescription-' + i">Ingredient description</label>
-              <input type="text" class="form-control" [name]="'ingredientDescription-' + i" [id]="'ingredientDescription-' + i" formControlName="ingredientDescription">
-              <span id="helpBlockIngredientDescription" class="help-block" *ngIf="onGetFormControl(i, 'ingredientDescription').errors && (onGetFormControl(i, 'ingredientDescription').dirty || onGetFormControl(i, 'ingredientDescription').touched)">Ingredient description is compulsory</span>
+
+            <div class="col-xs-2 form-group">
+              <label class="control-label text-right" [for]="'action-' + i" style="display: block; width: 100%;">&nbsp;</label>
+              <button type="button" class="btn btn-warning pull-right" title="Remove this ingredient" (click)="onDeleteIngredient(i)">
+                <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
+              </button>
             </div>
           </div>
+        </ng-container>
+      </div>
 
-          <div class="col-xs-2 form-group">
-            <label class="control-label text-right" [for]="'action-' + i" style="display: block; width: 100%;">&nbsp;</label>
-            <button type="button" class="btn btn-warning pull-right" title="Remove this ingredient" (click)="onDeleteIngredient(i)">
-              <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
-      </ng-container>
+      <div class="col-xs-12 form-group">
+        <button type="button" class="btn btn-primary" title="Add an ingredient" (click)="onAddIngredient(null)">
+          <i class="glyphicon glyphicon-plus" aria-hidden="true"></i> New ingredient
+        </button>
+      </div>
     </div>
 
-    <div class="col-xs-12 form-group">
-      <button type="button" class="btn btn-primary" title="Add an ingredient" (click)="onAddIngredient(null)">
-        <i class="glyphicon glyphicon-plus" aria-hidden="true"></i> New ingredient
-      </button>
+    <div class="row">
+      <div class="col-xs-12 text-right">
+        <button type="button" class="btn btn-success" [disabled]="!recipeForm.valid" (click)="onSaveRecipe(isEditMode)">Save</button>
+        &nbsp;
+        <button type="button" class="btn btn-primary" (click)="onCancel()">Cancel</button>
+      </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-xs-12 text-right">
-      <button type="button" class="btn btn-success" [disabled]="!recipeForm.valid" (click)="onSaveRecipe(isEditMode)">Save</button>
-      &nbsp;
-      <button type="button" class="btn btn-primary" (click)="onCancel()">Cancel</button>
-    </div>
-  </div>
-</form>
+  </form>
+</div>
