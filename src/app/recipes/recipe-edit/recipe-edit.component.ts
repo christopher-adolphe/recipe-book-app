@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 import { Subscription } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -14,7 +15,47 @@ import { DeactivateComponent } from 'src/app/shared/models/deactivate-component.
 @Component({
   selector: 'app-recipe-edit',
   templateUrl: './recipe-edit.component.html',
-  styleUrls: ['./recipe-edit.component.scss']
+  styleUrls: ['./recipe-edit.component.scss'],
+  animations: [
+    trigger('recipeForm', [
+      state('slideInRight', style({
+        opacity: 1,
+        transform: 'translateX(0)'
+      })),
+      transition(':enter', [
+        style({
+          opacity: 0,
+          transform: 'translateX(50%)'
+        }),
+        animate(300)
+      ]),
+      transition(':leave', [
+        animate(300, style({
+          transform: 'translateX(50%)',
+          opacity: 0
+        }))
+      ])
+    ]),
+    trigger('ingredientItem', [
+      state('slideInRight', style({
+        opacity: 1,
+        transform: 'translateX(0)'
+      })),
+      transition(':enter', [
+        style({
+          opacity: 0,
+          transform: 'translateX(50%)'
+        }),
+        animate(300)
+      ]),
+      transition(':leave', [
+        animate(300, style({
+          transform: 'translateX(50%)',
+          opacity: 0
+        }))
+      ])
+    ])
+  ]
 })
 export class RecipeEditComponent implements OnInit, OnDestroy, DeactivateComponent {
   private _storeSubscription: Subscription;
