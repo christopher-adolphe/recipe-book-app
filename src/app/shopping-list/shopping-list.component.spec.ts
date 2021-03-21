@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms'
 
 import { Store, StoreModule } from '@ngrx/store';
@@ -14,7 +14,7 @@ describe('ShoppingListComponent', () => {
   let component: ShoppingListComponent;
   let fixture: ComponentFixture<ShoppingListComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ShoppingListComponent, ShoppingEditComponent],
       imports: [FormsModule, StoreModule.forRoot({}), RouterTestingModule.withRoutes([])],
