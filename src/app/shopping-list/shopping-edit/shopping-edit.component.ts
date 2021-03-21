@@ -13,7 +13,7 @@ import * as ShoppingListActions from '../../shared/services/shopping-list/store/
   styleUrls: ['./shopping-edit.component.scss']
 })
 export class ShoppingEditComponent implements OnInit, OnDestroy {
-  @ViewChild('shoppingListForm', {static: false}) shoppingListForm: NgForm;
+  @ViewChild('shoppingListForm') shoppingListForm: NgForm;
   private _ObsSubscription: Subscription;
   // selectedIngredientIndex: number;
   selectedIngredient: Ingredient;

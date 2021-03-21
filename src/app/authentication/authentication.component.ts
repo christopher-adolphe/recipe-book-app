@@ -28,7 +28,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   isLoading: boolean;
   error: string;
 
-  @ViewChild(PlaceholderDirective, { static: false }) alertHost: PlaceholderDirective;
+  @ViewChild(PlaceholderDirective) alertHost: PlaceholderDirective;
 
   constructor(
     private authenticationService: AuthenticationService,
