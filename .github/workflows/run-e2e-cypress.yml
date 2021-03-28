@@ -1,6 +1,10 @@
 name: Run e2e with Cypress
 
-on: [push]
+on:
+  pull_request:
+    branches: [master, develop]
+  push:
+    branches: [master, develop, tech-task/*, feature/*, fix/*, hot-fix/*]
 
 jobs:
   cypress-run:
