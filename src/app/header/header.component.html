@@ -1,14 +1,14 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a [routerLink]="['']" class="navbar-brand">Recipe Book</a>
+      <a [routerLink]="['']" class="navbar-brand" data-cy="lnk-home">Recipe Book</a>
     </div>
 
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li><a [routerLink]="['']" routerLinkActive="active" *ngIf="isAuthenticated">Recipes</a></li>
-        <li><a [routerLink]="['/auth']" routerLinkActive="active" *ngIf="!isAuthenticated">Authenticate</a></li>
-        <li><a [routerLink]="['/shopping-list']" routerLinkActive="active">Shopping list</a></li>
+        <li><a [routerLink]="['']" routerLinkActive="active" *ngIf="isAuthenticated" data-cy="lnk-recipes">Recipes</a></li>
+        <li><a [routerLink]="['/auth']" routerLinkActive="active" *ngIf="!isAuthenticated" data-cy="lnk-authenticate">Authenticate</a></li>
+        <li><a [routerLink]="['/shopping-list']" routerLinkActive="active" data-cy="lnk-shopping-list">Shopping list</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">

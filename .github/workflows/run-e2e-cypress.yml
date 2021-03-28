@@ -1,0 +1,25 @@
+name: Run e2e with Cypress
+
+on:
+  pull_request:
+    branches: [master, develop]
+  push:
+    branches: [master, develop, tech-task/*, feature/*, fix/*, hot-fix/*]
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          start: npm start
+          wait-on: 'http://localhost:4200'

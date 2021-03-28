@@ -16,9 +16,4 @@ describe('DropdownDirective', () => {
     }).createComponent(TestComponent);
     fixture.detectChanges(); // initial binding
   });
-
-
-
-  it('should create an instance', () => {
-  });
 });
